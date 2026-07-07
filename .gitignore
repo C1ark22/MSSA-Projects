@@ -1,0 +1,24 @@
+# Build folders
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.rsuser
+
+# .NET / MAUI generated files
+**/bin/
+**/obj/
+*.apk
+*.aab
+*.ipa
+*.appx
+*.msix
+
+# OS files
+Thumbs.db
+.DS_Store
