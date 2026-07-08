@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VeteranServicesTracker.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Student Check-In">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label
+                Text="Veteran Services Check-In"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Please enter your information to check in."
+                FontSize="16"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center" />
+
+            <Border
+                StrokeThickness="1"
+                Padding="20"
+                StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label
+                        Text="Student ID"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+
+                    <Entry
+                        x:Name="StudentIdEntry"
+                        Placeholder="Enter student ID"
+                        Keyboard="Numeric"
+                        MaxLength="9"
+                        ReturnType="Next" />
+
+                    <Label
+                        Text="Full Name"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+
+                    <Entry
+                        x:Name="FullNameEntry"
+                        Placeholder="Enter full name"
+                        Keyboard="Text"
+                        ReturnType="Next" />
+
+                    <Label
+                        Text="Status"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+
+                    <Picker
+                        x:Name="StatusPicker"
+                        Title="Select status">
+                        <Picker.Items>
+                            <x:String>Veteran</x:String>
+                            <x:String>Active Duty</x:String>
+                            <x:String>Reserve</x:String>
+                            <x:String>Dependent</x:String>
+                            <x:String>Civilian</x:String>
+                        </Picker.Items>
+                    </Picker>
+
+                    <Button
+                        Text="Check In"
+                        FontSize="18"
+                        Clicked="OnCheckInClicked" />
+
+                    <Label
+                        x:Name="StatusLabel"
+                        Text=""
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                Text="Recent Check-Ins"
+                FontSize="20"
+                FontAttributes="Bold" />
+
+            <CollectionView x:Name="RecentCheckInsView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            StrokeThickness="1"
+                            Padding="10"
+                            Margin="0,5"
+                            StrokeShape="RoundRectangle 8">
+
+                            <VerticalStackLayout>
+                                <Label
+                                    Text="{Binding FullName}"
+                                    FontAttributes="Bold" />
+
+                                <Label
+                                    Text="{Binding StudentId}" />
+
+                                <Label
+                                    Text="{Binding CheckInInfo}"
+                                    FontSize="13" />
+                            </VerticalStackLayout>
+
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

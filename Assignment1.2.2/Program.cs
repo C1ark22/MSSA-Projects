@@ -13,7 +13,7 @@
                 naturalNumbers[i] = i + 1;
                 Console.Write(naturalNumbers[i] + " ");
             }
-            Console.WriteLine("\n The sum of the first 10 natural numbers is: " + naturalNumbers.Sum());
+            Console.WriteLine("\nThe sum of the first 10 natural numbers is: " + naturalNumbers.Sum());
         }
     }
 }

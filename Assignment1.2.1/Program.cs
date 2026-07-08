@@ -10,15 +10,21 @@
             double num1 = Convert.ToDouble(Console.ReadLine());
             Console.Write("Input 2nd number: ");
             double num2 = Convert.ToDouble(Console.ReadLine());
-            // if num1 and num2 are equal, print "The numbers are equal." 
-            // otherwise print "The numbers are not equal."
-            if (num1 == num2)
+            
+            Compare(num1, num2);
+
+        }
+        // if num1 and num2 are equal, print "The numbers are equal." 
+        // otherwise print "The numbers are not equal."
+        static void Compare(double firstInput, double secondInput)
+        {
+            if (firstInput == secondInput)
             {
-                Console.WriteLine("The numbers are equal.");
+                Console.WriteLine($"{firstInput} and {secondInput} are equal");
             }
             else
             {
-                Console.WriteLine("The numbers are not equal.");
+                Console.WriteLine($"{firstInput} and {secondInput} are not equal");
             }
         }
     }

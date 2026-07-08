@@ -7,5 +7,6 @@ int age = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("Please enter your address: ");
 string address = Console.ReadLine();
 
-Console.WriteLine("My name is " + name + ", I am " + age +
- " years old, and I live at " + address + ".\n");
+Console.WriteLine($"My name is {name}, {age} years old, " +
+    $"and I this is my {address}");
+
