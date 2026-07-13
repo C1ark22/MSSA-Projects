@@ -5,3 +5,10 @@ Display the main page
 It will have a few boxes to put in Student ID, Full Name,
 A dropdown box for status (Veteran, Active Duty, Reserve, Dependent, Guest)
 
+After the student checks-in it will have open a small window for its completion
+
+
+Logic 
+Input->Validate->Send to API->Save to database->Display Success
+
+Code Pseudocode
