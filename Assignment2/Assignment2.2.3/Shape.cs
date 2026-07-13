@@ -4,8 +4,8 @@
     public abstract class Shape
     {
         public int Id { get; set; }
-        public string Name { get; set; } = "";
-        public string Color { get; set; } = "";
+        public string Name { get; set; }
+        public string Color { get; set; } 
 
         // Every child class must provide its own area calculation
         public abstract double CalculateArea();
@@ -40,10 +40,10 @@
             int shapeID = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Please enter a name: ");
-            string shapeName = Console.ReadLine() ?? "No name provided";
+            string shapeName = Console.ReadLine();
 
             Console.WriteLine("Please enter a color: ");
-            string shapeColor = Console.ReadLine() ?? "No color provided";
+            string shapeColor = Console.ReadLine();
             // add properties like id, name and color
 
             // add method calculate
@@ -92,8 +92,7 @@
                     Console.WriteLine($"Name: {square.Name}");
                     Console.WriteLine($"Color: {square.Color}");
                     Console.WriteLine($"Side: {square.Side}");
-                    Console.WriteLine(
-                        $"Area: {square.CalculateArea():F2}");
+                    Console.WriteLine($"Area: {square.CalculateArea()}");
                     break;
             } 
 
