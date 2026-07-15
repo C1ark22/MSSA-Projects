@@ -85,9 +85,11 @@
             // student input their roll number
             Console.Write("Input the Roll Number of the student: ");
             int rollNumber = Convert.ToInt32(Console.ReadLine());
+
             // student enter their name
             Console.Write("Input the Name of the student: ");
             string name = Console.ReadLine();
+
             // input marks for 3 subjects (__,__,__)
             Console.Write("Input the marks of Physics, Chemistry, and Computer Application: ");
             string input = Console.ReadLine();
