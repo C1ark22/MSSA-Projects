@@ -17,21 +17,29 @@ namespace Assignment_3._2._4
             Console.Write("Enter the Fourth number: ");
             enteredNumbers[3] = Convert.ToInt32(Console.ReadLine());
 
-            AverageAndSumNumbers(enteredNumbers);
-        }
-        static void AverageAndSumNumbers(int[] numbers)
-        {
-            int sum = 0;
+            AverageAndSumNumbers(out int total, out double average, enteredNumbers);
+
             Console.Write("The average of ");
-            for (int i = 0; i < numbers.Length; i++)
+            for (int i = 0; i < enteredNumbers.Length; i++)
             {
-                Console.Write($"{numbers[i]} ");
-                sum += numbers[i];
+                Console.Write($"{enteredNumbers[i]} ");
             }
 
-            double average = (double)sum / numbers.Length;
-            Console.Write($"is {average}\n");
-            Console.WriteLine($"The total is {sum}");
+            Console.WriteLine($"is {average}");
+            Console.WriteLine($"The total is {total}");
+        }
+        // (returns total, returns average, accepts multiple integers)
+        static void AverageAndSumNumbers(out int total, out double average, params int[]numbers )
+        {
+            total = 0;
+            
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                total += numbers[i];
+            }
+
+            average = (double)total / numbers.Length;
+            
         }
     }
 }

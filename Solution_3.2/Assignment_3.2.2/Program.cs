@@ -21,7 +21,7 @@
             Console.WriteLine("\nThe First Matrix is:");
             MatrixDisplay(firstMatrix);
 
-            Console.WriteLine("\nThe First Matrix is:");
+            Console.WriteLine("\nThe Second Matrix is:");
             MatrixDisplay(secondMatrix);
 
             SumOfMatrices(firstMatrix,secondMatrix);
@@ -71,7 +71,16 @@
         static void SumOfMatrices(int[,] firstMatrix, int[,] secondMatrix)
         {
             int[,] sum = new int
-                [ firstMatrix.GetLength(0), firstMatrix.GetLength(1)];
+                [firstMatrix.GetLength(0), firstMatrix.GetLength(1)];
+
+            int maxWidth = 0;
+
+            foreach (int num in sum)
+            {
+                int length = sum.ToString().Length;
+                if (length > maxWidth)
+                    maxWidth = length;
+            }
 
             // for i element firstMatrix [i,0] add secondMatrix[i,0]
             // for j element firstMatrix [0,j] add secondMatrix[0,j]
@@ -88,7 +97,7 @@
             {
                 for (int j = 0; j < sum.GetLength(1); j++)
                 {
-                    Console.Write(sum[i, j] + " ");
+                    Console.Write(sum[i, j].ToString().PadLeft(maxWidth));
                 }
                 Console.WriteLine();
             }
