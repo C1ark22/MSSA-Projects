@@ -15,19 +15,25 @@
         }
         static int[] TwoSum(int[] nums, int target) 
         {
+            // Create a dictionary to store the numbers and their indices
             Dictionary<int,int>numberMap = new Dictionary<int,int>();
 
+            // Iterate through the array of numbers
             for (int i = 0; i < nums.Length; i++)
             {
+                // Get the current number
                 int currentNumber = nums[i];
 
                 // the number needed to reach the target
                 int complementNumber = target - currentNumber;
 
+                // Check if the complement number exists in the dictionary
                 if (numberMap.ContainsKey(complementNumber))
                 {
+                    // If it exists, return the indices of the current number and the complement number
                     return new int[] { numberMap[complementNumber],i };
                 }
+                // If it doesn't exist, add the current number and its index to the dictionary
                 numberMap[currentNumber] = i;
             }
             return new int[] { };

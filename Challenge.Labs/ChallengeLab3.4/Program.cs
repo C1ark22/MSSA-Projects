@@ -15,8 +15,8 @@
             // the result will show the remaining string after all the
             // substrings have been removed
 
-            //string originalString = "ABFCACDB";
-            string originalString = "ACBBD";
+            string originalString = "ABFCACDB";
+            //string originalString = "ACBBD";
             string[] subStrings = { "AB", "CD" };
             
             bool wordChange = true;
@@ -25,6 +25,7 @@
 
             while (wordChange) 
             {
+                // Check if the current word contains any of the substrings
                 string previousResult = currentWord;
                 Console.WriteLine(currentWord + " (before removal)");
 
@@ -44,6 +45,7 @@
                     removalOccured = true;
                 }
             }
+            // Display the final result
             if (!removalOccured)
             {
                 Console.WriteLine("We cannot do any operations on the " +

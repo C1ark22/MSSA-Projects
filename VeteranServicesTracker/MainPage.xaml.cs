@@ -44,6 +44,6 @@ namespace VeteranServicesTracker
     }
     public class CheckInDisplay
     {
-        public string studentID
+        
     }
 }

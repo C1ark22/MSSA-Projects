@@ -12,3 +12,17 @@ Logic
 Input->Validate->Send to API->Save to database->Display Success
 
 Code Pseudocode
+
+
+Student enters:
+- Student ID
+- Full Name
+- Status
+
+App sends check-in to cloud
+
+Staff can view:
+- All check-ins
+- Today's check-ins
+- Students by status
+- Students who have not checked in recently
