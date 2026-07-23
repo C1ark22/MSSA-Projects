@@ -5,10 +5,13 @@
         static void Main(string[] args)
         {
             int[] nums = {2, 7, 11, 15};
+            // int[] nums = {3, 2, 4};
+            // int[] nums = {3, 3};
             int target = 9;
+            //int target = 6;
 
-            TwoSum(nums, target);
-            Console.Write($"{TwoSum(nums, target)}");
+            int[] result = TwoSum(nums, target);
+            Console.Write($"{result[0]}, {result[1]}");
         }
         static int[] TwoSum(int[] nums, int target) 
         {
@@ -18,7 +21,8 @@
             {
                 int currentNumber = nums[i];
 
-                int complementNumber = currentNumber - target;
+                // the number needed to reach the target
+                int complementNumber = target - currentNumber;
 
                 if (numberMap.ContainsKey(complementNumber))
                 {
