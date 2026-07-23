@@ -15,19 +15,12 @@
             // the result will show the remaining string after all the
             // substrings have been removed
 
-            string originalString = "ABFCACDB";
+            //string originalString = "ABFCACDB";
+            string originalString = "ACBBD";
             string[] subStrings = { "AB", "CD" };
             
-            //string result = originalString.Replace(substring1, "");
-            //Console.WriteLine(result);
-
-            //string result2 = result.Replace(substring2, "");
-            //Console.WriteLine(result2);
-
-            //string result3 = result2.Replace(substring1, "");
-            //Console.WriteLine(result3);
-
             bool wordChange = true;
+            bool removalOccured = false;
             string currentWord = originalString;
 
             while (wordChange) 
@@ -35,17 +28,30 @@
                 string previousResult = currentWord;
                 Console.WriteLine(currentWord + " (before removal)");
 
+                // Check for each substring in the current word
                 for (int i = 0; i < subStrings.Length; i++)
                 {
                     currentWord = currentWord.Replace(subStrings[i], "");
                     Console.WriteLine(currentWord + "(during the removal)");
                 }
-
+                // Check if any change occurred
                 wordChange = previousResult != currentWord;
-                Console.WriteLine(currentWord + " (after removal)");
+                Console.WriteLine(currentWord + " (any changes occured)");
 
+                // Check if any removal occurred
+                if (wordChange)
+                {
+                    removalOccured = true;
+                }
             }
-            Console.WriteLine($"Final result: {currentWord}");
+            if (!removalOccured)
+            {
+                Console.WriteLine("We cannot do any operations on the " +
+                        "string so the length remains the same.");
+            }else
+            {
+                Console.WriteLine("The remaining string is: " + currentWord);
+            }
         }
     }
 }
