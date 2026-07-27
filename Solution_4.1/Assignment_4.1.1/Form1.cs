@@ -35,6 +35,7 @@ namespace Assignment_4._1._1
 
             string fullName = $"{firstName} {lastName}".Trim();
 
+            // New Person object creation using the constructor
             Person newPerson = new Person
             {
                 FirstName = firstName,
@@ -44,9 +45,11 @@ namespace Assignment_4._1._1
                 Address = address
             };
 
+            // Add the new person to the dictionary and binding list
             personDictionary.Add(newPerson.FullName, newPerson);
             personBinding.Add(newPerson);
 
+            // Clear the input fields after adding the person
             txtboxFirstName.Clear();
             txtboxLastName.Clear();
             txtboxMobileNumber.Clear();
@@ -56,6 +59,7 @@ namespace Assignment_4._1._1
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            // Get the currently selected person from the binding source
             Person selectedPerson = personBindingSource.Current as Person;
 
             if (selectedPerson == null)
@@ -66,6 +70,7 @@ namespace Assignment_4._1._1
             DialogResult result =
                 MessageBox.Show($"Are you sure you want to delete {selectedPerson.FullName}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+            // If the user confirms deletion, remove the person from the dictionary and binding list
             if (result == DialogResult.Yes)
             {
                 personDictionary.Remove(selectedPerson.FullName);
@@ -80,6 +85,7 @@ namespace Assignment_4._1._1
         {
             string searchName = txtboxSearch.Text.Trim();
 
+            // Check if the person exists in the dictionary
             if (personDictionary.ContainsKey(searchName))
             {
                 BindingList<Person> searchResults = new BindingList<Person>();
@@ -96,6 +102,7 @@ namespace Assignment_4._1._1
 
         private void btnShowAll_Click(object sender, EventArgs e)
         {
+            // Create a new BindingList containing all persons from the dictionary
             BindingList<Person> allPersons = new BindingList<Person>(new List<Person>(personDictionary.Values));
             personBindingSource.DataSource = allPersons;
         }

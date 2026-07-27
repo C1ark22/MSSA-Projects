@@ -172,9 +172,9 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(47, 288);
+            dataGridView1.Location = new Point(12, 288);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(741, 150);
+            dataGridView1.Size = new Size(776, 150);
             dataGridView1.TabIndex = 13;
             // 
             // txtboxSearch
@@ -202,7 +202,7 @@
             btnShowAll.AutoSize = true;
             btnShowAll.BackColor = SystemColors.ControlLight;
             btnShowAll.Font = new Font("Segoe UI", 12F);
-            btnShowAll.Location = new Point(47, 252);
+            btnShowAll.Location = new Point(12, 252);
             btnShowAll.Name = "btnShowAll";
             btnShowAll.Size = new Size(81, 31);
             btnShowAll.TabIndex = 17;
