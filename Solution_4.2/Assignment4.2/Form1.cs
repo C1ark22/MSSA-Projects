@@ -22,6 +22,7 @@ namespace Assignment4._2
             {
                 this.Hide();
 
+                // opens studentForm 
                 Form2 studentForm = new Form2();
                 studentForm.ShowDialog();
 
