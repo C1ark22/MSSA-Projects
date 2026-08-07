@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../ChallengeLab5.1.2/ChallengeLab5.1.2.csproj" />
+  <Project Path="ChallengeLab5.1.1.csproj" />
+</Solution>
