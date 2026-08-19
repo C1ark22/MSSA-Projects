@@ -4,7 +4,10 @@ using System.Text;
 
 namespace SFSU_VeteranServices_Tracker.Model
 {
-    internal class Student
+    class Student
     {
+        public int StudentID { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
     }
 }

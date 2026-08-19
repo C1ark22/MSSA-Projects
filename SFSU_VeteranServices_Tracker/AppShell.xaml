@@ -7,7 +7,7 @@
     Title="SFSU_VeteranServices_Tracker">
 
     <ShellContent
-        Title="Home"
+        Title="Veteran Services Check-In"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
