@@ -4,10 +4,11 @@ using System.Text;
 
 namespace SFSU_VeteranServices_Tracker.Model
 {
-    class Student
+    class StudentCheckIn
     {
-        public int StudentID { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
+        public int StudentId { get; set; }
         public string Status { get; set; }
+        public DateTime CheckInTime { get; set; }
     }
 }

@@ -16,7 +16,7 @@
             <!--  Page Title  -->
             <Label
                 FontAttributes="Bold"
-                FontSize="28"
+                FontSize="40"
                 HorizontalOptions="Center"
                 Text="Veteran Services Check-In" />
 
