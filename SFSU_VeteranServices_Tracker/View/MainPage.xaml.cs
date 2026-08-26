@@ -1,5 +1,6 @@
 ﻿
 using SFSU_VeteranServices_Tracker.Model;
+using SFSU_VeteranServices_Tracker.View;
 
 namespace SFSU_VeteranServices_Tracker
 {
@@ -11,6 +12,10 @@ namespace SFSU_VeteranServices_Tracker
         public MainPage()
         {
             InitializeComponent();
+        }
+        private async void OnStaffClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(LoginPage));
         }
 
         private async void OnCheckInClicked(object sender, EventArgs e)
@@ -80,10 +85,9 @@ namespace SFSU_VeteranServices_Tracker
         }
         private async void OnCodeOfConductTapped(object sender, TappedEventArgs e)
         {
-            await DisplayAlertAsync(
-                "Code of Conduct",
-                "Veterans Corner Code of Conduct will be displayed here.",
-                "Close");
+            string url = "https://conduct.sfsu.edu/standards";
+
+            await Launcher.Default.OpenAsync(url);
 
             codeOfConductCheckBox.IsEnabled = true;
         }
