@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SFSU_VeteranServices_Tracker.View.StaffPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="StaffPage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <!--  SignOut Staff Button  -->
+            <Grid>
+                <Button
+                    x:Name="SignOutButton"
+                    Clicked="OnSignOutClicked"
+                    HorizontalOptions="End"
+                    Text="Sign Out" />
+            </Grid>
+
+            <!--  Page Title  -->
+            <Label
+                FontAttributes="Bold"
+                FontSize="32"
+                HorizontalOptions="Center"
+                Text="Staff Dashboard" />
+
+            <!--  Total Check Ins  -->
+            <Label
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Today's Total Check-Ins" />
+
+            <Label
+                x:Name="totalCheckInsLabel"
+                FontAttributes="Bold"
+                FontSize="40"
+                HorizontalOptions="Center"
+                Text="0" />
+
+            <!--  Status Totals  -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="20"
+                RowDefinitions="Auto,Auto,Auto"
+                RowSpacing="15">
+
+                <!--  Veteran  -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Veterans" />
+
+                    <Label
+                        x:Name="veteranCountLabel"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="0" />
+                </VerticalStackLayout>
+
+                <!--  Active Duty  -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Active Duty" />
+
+                    <Label
+                        x:Name="activeDutyCountLabel"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="0" />
+                </VerticalStackLayout>
+
+                <!--  Reserve  -->
+                <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Reserve" />
+
+                    <Label
+                        x:Name="reserveCountLabel"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="0" />
+                </VerticalStackLayout>
+
+                <!--  Dependent  -->
+                <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Dependent" />
+
+                    <Label
+                        x:Name="dependentCountLabel"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="0" />
+                </VerticalStackLayout>
+
+                <!--  Civilian  -->
+                <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Civilian" />
+
+                    <Label
+                        x:Name="civilianCountLabel"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="0" />
+                </VerticalStackLayout>
+
+            </Grid>
+
+            <!--  Student List Title  -->
+            <Label
+                Margin="0,20,0,0"
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="Today's Student Check-Ins" />
+
+            <!--  Column Headers  -->
+            <Grid ColumnDefinitions="*,2*,*,*" ColumnSpacing="10">
+
+                <Label
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    Text="Student ID" />
+
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    Text="Name" />
+
+                <Label
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    Text="Status" />
+
+                <Label
+                    Grid.Column="3"
+                    FontAttributes="Bold"
+                    Text="Time" />
+
+            </Grid>
+
+            <!--  Student List  -->
+            <CollectionView x:Name="checkInCollectionView">
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Grid
+                            Padding="0,8"
+                            ColumnDefinitions="*,2*,*,*"
+                            ColumnSpacing="10">
+
+                            <Label Grid.Column="0" Text="{Binding StudentId}" />
+
+                            <Label Grid.Column="1" Text="{Binding FullName}" />
+
+                            <Label Grid.Column="2" Text="{Binding Status}" />
+
+                            <Label Grid.Column="3" Text="{Binding CheckInTime, StringFormat='{0:hh:mm tt}'}" />
+
+                        </Grid>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

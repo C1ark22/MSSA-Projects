@@ -73,7 +73,7 @@ namespace SFSU_VeteranServices_Tracker
                 CheckInTime = DateTime.Now
             };
 
-            checkIns.Add(student);
+            checkIns.Insert(0,student);
 
             await SaveCheckIntoFile(student);
 
@@ -108,14 +108,8 @@ namespace SFSU_VeteranServices_Tracker
                     trackerFolder,
                     "checkins.csv");
 
-                // If CSV does not exist, create it with column names
-                if (!File.Exists(filePath))
-                {
-                    await File.WriteAllTextAsync(
-                        filePath,
-                        "StudentId,FullName,Status,CheckInTime" +
-                        Environment.NewLine);
-                }
+                string header =
+                    "StudentId,FullName,Status,CheckInTime";
 
                 string record =
                     $"{student.StudentId}," +
@@ -123,9 +117,39 @@ namespace SFSU_VeteranServices_Tracker
                     $"{student.Status}," +
                     $"{student.CheckInTime}";
 
-                await File.AppendAllTextAsync(
-                    filePath,
-                    record + Environment.NewLine);
+                // First time creating the CSV
+                if (!File.Exists(filePath))
+                {
+                    await File.WriteAllTextAsync(
+                        filePath,
+                        header + Environment.NewLine +
+                        record + Environment.NewLine);
+                }
+                else
+                {
+                    // Read everything already inside the CSV
+                    string[] lines = await File.ReadAllLinesAsync(filePath);
+
+                    // Create a new list of lines
+                    List<string> updatedLines = new List<string>();
+
+                    // Keep the column headers first
+                    updatedLines.Add(header);
+
+                    // Add newest student directly under the header
+                    updatedLines.Add(record);
+
+                    // Add the older records after the new student
+                    for (int i = 1; i < lines.Length; i++)
+                    {
+                        updatedLines.Add(lines[i]);
+                    }
+
+                    // Rewrite the CSV
+                    await File.WriteAllLinesAsync(
+                        filePath,
+                        updatedLines);
+                }
 
                 await DisplayAlertAsync(
                     "Saved",

@@ -38,10 +38,7 @@ public partial class LoginPage : ContentPage
 
         if (username == "staff" && password == "1234")
         {
-            await DisplayAlertAsync(
-                "Login Successful",
-                "Welcome, staff member.",
-                "OK");
+            await Shell.Current.GoToAsync(nameof(StaffPage));
         }
         else
         {

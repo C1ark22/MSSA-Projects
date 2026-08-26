@@ -9,6 +9,7 @@ namespace SFSU_VeteranServices_Tracker
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(StaffPage), typeof(StaffPage));
         }
     }
 }

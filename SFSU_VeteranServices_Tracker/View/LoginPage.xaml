@@ -13,10 +13,12 @@
             HorizontalOptions="Center"
             Text="Staff Login" />
 
+        <!--  Staff Username  -->
         <Label Text="Username" />
 
         <Entry x:Name="usernameEntry" Placeholder="Enter Username" />
 
+        <!--  Staff Password  -->
         <Label Text="Password" />
 
         <Entry
@@ -24,6 +26,7 @@
             IsPassword="True"
             Placeholder="Enter Password" />
 
+        <!--  Login Button  -->
         <Button 
             Text="LOGIN"
             Clicked="OnLoginClicked"/>
