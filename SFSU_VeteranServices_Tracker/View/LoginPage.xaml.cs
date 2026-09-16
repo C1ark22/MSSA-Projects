@@ -1,4 +1,15 @@
-﻿using System;
+﻿/******************************************************************************
+ * Project: SFSU Veteran Services Tracker
+ * Author: Clark Batungbakal 
+ * Class Name: LoginPage.xaml.cs
+ * 
+ * Description: This class represents the login page of the application. 
+ * It handles user input for username and password, validates the input, and 
+ * navigates to the StaffPage upon successful login.
+ * 
+ * ***************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 

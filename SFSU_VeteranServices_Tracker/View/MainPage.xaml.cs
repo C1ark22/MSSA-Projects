@@ -1,4 +1,13 @@
-﻿
+﻿/******************************************************************************
+ * Project: SFSU Veteran Services Tracker
+ * Author: Clark Batungbakal 
+ * Class Name: MainPage.xaml.cs
+ * 
+ * Description: This class represents the main page of the application. It 
+ * provides a user interface for checking in students and viewing their 
+ * check-in status.
+ * 
+ * ***************************************************************************/
 using SFSU_VeteranServices_Tracker.Model;
 using SFSU_VeteranServices_Tracker.View;
 
@@ -68,7 +77,7 @@ namespace SFSU_VeteranServices_Tracker
             StudentCheckIn student = new StudentCheckIn
             {
                 FullName = fullNameEntry.Text,
-                StudentId = studentID,
+                StudentId = studentID.ToString(),
                 Status = studentStatusPicker.SelectedItem.ToString(),
                 CheckInTime = DateTime.Now
             };
