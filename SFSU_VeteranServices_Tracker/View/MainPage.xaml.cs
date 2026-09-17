@@ -10,6 +10,8 @@
  * ***************************************************************************/
 using SFSU_VeteranServices_Tracker.Model;
 using SFSU_VeteranServices_Tracker.View;
+using SFSU_VeteranServices_Tracker.Services;
+using System.Text.Json;
 
 namespace SFSU_VeteranServices_Tracker
 {
@@ -17,6 +19,8 @@ namespace SFSU_VeteranServices_Tracker
     {
         private List<StudentCheckIn> checkIns = new List<StudentCheckIn>();
         int count = 0;
+        private readonly EncryptionService encryptionService =
+            new EncryptionService();
 
         public MainPage()
         {
@@ -29,14 +33,18 @@ namespace SFSU_VeteranServices_Tracker
 
         private async void OnCheckInClicked(object sender, EventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(fullNameEntry.Text))
+            // Check if full name is empty
+            if (string.IsNullOrWhiteSpace(fullNameEntry.Text))
             {
                 await DisplayAlertAsync(
                     "Missing Information",
                     "Please enter your Full Name",
                     "OK");
+
                 return;
             }
+
+            // Make sure the name only contains letters and spaces
             foreach (char character in fullNameEntry.Text)
             {
                 if (!char.IsLetter(character) && character != ' ')
@@ -45,35 +53,45 @@ namespace SFSU_VeteranServices_Tracker
                         "Invalid Name",
                         "Student name can only contain letters and spaces.",
                         "OK");
+
                     return;
                 }
             }
 
-            if(!int.TryParse(studentIdEntry.Text, out int studentID))
+            // Make sure Student ID only contains numbers
+            if (!int.TryParse(studentIdEntry.Text, out int studentID))
             {
                 await DisplayAlertAsync(
                     "Invalid Student ID",
                     "Please enter numbers only.",
                     "OK");
+
                 return;
             }
+
+            // Make sure a status was selected
             if (studentStatusPicker.SelectedItem == null)
             {
                 await DisplayAlertAsync(
                     "Missing Information",
                     "Please select your status.",
                     "OK");
+
                 return;
             }
+
+            // Make sure the Code of Conduct was acknowledged
             if (!codeOfConductCheckBox.IsChecked)
             {
                 await DisplayAlertAsync(
                     "Code of Conduct",
                     "Please read and acknowledge the Code of Conduct",
                     "OK");
+
                 return;
             }
 
+            // Create the StudentCheckIn object
             StudentCheckIn student = new StudentCheckIn
             {
                 FullName = fullNameEntry.Text,
@@ -82,10 +100,19 @@ namespace SFSU_VeteranServices_Tracker
                 CheckInTime = DateTime.Now
             };
 
-            checkIns.Insert(0,student);
+            // Keep the object in memory
+            checkIns.Insert(0, student);
 
-            await SaveCheckIntoFile(student);
+            // Convert the entire StudentCheckIn object into JSON
+            string studentJson =
+                JsonSerializer.Serialize(student);
 
+            // Encrypt the JSON
+            string encryptedStudent =
+                await encryptionService.EncryptAsync(studentJson);
+
+            // Save ONLY the encrypted version to local storage
+            await SaveCheckIntoFile(encryptedStudent);
 
             await DisplayAlertAsync(
                 "Check In Successful",
@@ -100,70 +127,56 @@ namespace SFSU_VeteranServices_Tracker
 
             codeOfConductCheckBox.IsEnabled = true;
         }
-        private async Task SaveCheckIntoFile(StudentCheckIn student)
+        private async Task SaveCheckIntoFile(string encryptedStudent)
         {
             try
             {
+                // Get the user's Documents folder
                 string documentsFolder =
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    Environment.GetFolderPath(
+                        Environment.SpecialFolder.MyDocuments);
 
-                string trackerFolder = Path.Combine(
-                    documentsFolder,
-                    "VeteranServicesTracker");
+                // Create the VeteranServicesTracker folder
+                string trackerFolder =
+                    Path.Combine(
+                        documentsFolder,
+                        "VeteranServicesTracker");
 
                 Directory.CreateDirectory(trackerFolder);
 
-                string filePath = Path.Combine(
-                    trackerFolder,
-                    "checkins.csv");
+                // Create the path to the CSV file
+                string filePath =
+                    Path.Combine(
+                        trackerFolder,
+                        "checkins.csv");
 
+                // Create the column names
                 string header =
-                    "StudentId,FullName,Status,CheckInTime";
+                    "RecordId,EncryptedPayload";
 
+                // Give each check-in its own unique ID
+                string recordId =
+                    Guid.NewGuid().ToString();
+
+                // Create the row that will be saved
                 string record =
-                    $"{student.StudentId}," +
-                    $"{student.FullName}," +
-                    $"{student.Status}," +
-                    $"{student.CheckInTime}";
+                    $"{recordId},{encryptedStudent}";
 
-                // First time creating the CSV
+                // If the file does not exist yet,
+                // create it and add the header
                 if (!File.Exists(filePath))
                 {
                     await File.WriteAllTextAsync(
                         filePath,
-                        header + Environment.NewLine +
-                        record + Environment.NewLine);
-                }
-                else
-                {
-                    // Read everything already inside the CSV
-                    string[] lines = await File.ReadAllLinesAsync(filePath);
-
-                    // Create a new list of lines
-                    List<string> updatedLines = new List<string>();
-
-                    // Keep the column headers first
-                    updatedLines.Add(header);
-
-                    // Add newest student directly under the header
-                    updatedLines.Add(record);
-
-                    // Add the older records after the new student
-                    for (int i = 1; i < lines.Length; i++)
-                    {
-                        updatedLines.Add(lines[i]);
-                    }
-
-                    // Rewrite the CSV
-                    await File.WriteAllLinesAsync(
-                        filePath,
-                        updatedLines);
+                        header +
+                        Environment.NewLine);
                 }
 
-                await DisplayAlertAsync(
-                    "Saved",
-                    $"CSV saved at:\n{filePath}",
-                    "OK");
+                // Add the encrypted check-in
+                await File.AppendAllTextAsync(
+                    filePath,
+                    record +
+                    Environment.NewLine);
             }
             catch (Exception ex)
             {
