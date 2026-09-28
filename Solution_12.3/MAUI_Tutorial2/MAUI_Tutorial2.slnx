@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Microsoft_MAUI_MVVM_Tutorial/Microsoft_MAUI_MVVM_Tutorial.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
