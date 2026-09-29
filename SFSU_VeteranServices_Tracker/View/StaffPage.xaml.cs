@@ -9,7 +9,7 @@ namespace SFSU_VeteranServices_Tracker.View
 {
     public partial class StaffPage : ContentPage
     {
-        private readonly EncryptionService encryptionService = new EncryptionService();
+        private readonly ApiService apiService = new ApiService();
         private List<StudentCheckIn> checkIns = new List<StudentCheckIn>();
         public StaffPage() {
 
@@ -29,78 +29,22 @@ namespace SFSU_VeteranServices_Tracker.View
 
         private async Task LoadCheckInsAsync()
         {
-            // Read CSV
+            try
+            {
+                // Get all check-ins from the API
+                checkIns =
+                    await apiService.GetCheckInsAsync();
 
-            checkIns.Clear();
-
-            string documentsFolder = 
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            string trackerFolder = 
-                Path.Combine(documentsFolder, "VeteranServicesTracker");
-
-            string filePath = 
-                Path.Combine(trackerFolder, "checkins.csv");
-
-            if (!File.Exists(filePath))
+                // Update the dashboard with the data
+                UpdateDashboard();
+            }
+            catch (Exception ex)
             {
                 await DisplayAlertAsync(
-                    "File Not Found",
-                    $"The app looked here:\n\n{filePath}",
+                    "Connection Error",
+                    $"Unable to load check-ins.\n\n{ex.Message}",
                     "OK");
-
-                return;
             }
-
-            if (!File.Exists(filePath))
-            {
-                await DisplayAlertAsync(
-                    "File Not Found",
-                    "The check-in records file was not found.",
-                    "OK");
-                return;
-            }
-
-            string[] lines = await File.ReadAllLinesAsync(filePath);
-
-            // Start at 1 so we skip:
-            // RecordId,EncryptedPayload
-            for (int i = 1; i < lines.Length; i++)
-            {
-                if (string.IsNullOrWhiteSpace(lines[i]))
-                {
-                    continue;
-                }
-
-                // Split the line into RecordId and EncryptedPayload
-                string[] parts =
-                    lines[i].Split(',', 2);
-
-                if (parts.Length != 2)
-                {
-                    continue;
-                }
-
-                string encryptedPayload =
-                    parts[1];
-
-                // Decrypt the payload
-                string decryptedJson =
-                    await encryptionService.DecryptAsync(
-                        encryptedPayload);
-
-                // Deserialize the JSON into a StudentCheckIn object
-                StudentCheckIn? student =
-                    JsonSerializer.Deserialize<StudentCheckIn>(
-                        decryptedJson);
-
-                if (student != null)
-                {
-                    checkIns.Add(student);
-                }
-            }
-
-            UpdateDashboard();
         }
 
         private void UpdateDashboard()

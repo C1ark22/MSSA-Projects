@@ -14,7 +14,7 @@ using System.Text;
 
 namespace SFSU_VeteranServices_Tracker.Model
 {
-    class StudentCheckIn
+    public class StudentCheckIn
     {
         public string FullName { get; set; }
         public string StudentId { get; set; }

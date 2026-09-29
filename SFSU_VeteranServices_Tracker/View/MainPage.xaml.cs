@@ -11,17 +11,12 @@
 using SFSU_VeteranServices_Tracker.Model;
 using SFSU_VeteranServices_Tracker.View;
 using SFSU_VeteranServices_Tracker.Services;
-using System.Text.Json;
 
 namespace SFSU_VeteranServices_Tracker
 {
     public partial class MainPage : ContentPage
     {
-        private List<StudentCheckIn> checkIns = new List<StudentCheckIn>();
-        int count = 0;
-        private readonly EncryptionService encryptionService =
-            new EncryptionService();
-
+        private readonly ApiService apiService = new ApiService();
         public MainPage()
         {
             InitializeComponent();
@@ -100,19 +95,21 @@ namespace SFSU_VeteranServices_Tracker
                 CheckInTime = DateTime.Now
             };
 
-            // Keep the object in memory
-            checkIns.Insert(0, student);
+            // Send the check-in to the API
+            bool checkInSaved =
+                await apiService.CreateCheckInAsync(student);
 
-            // Convert the entire StudentCheckIn object into JSON
-            string studentJson =
-                JsonSerializer.Serialize(student);
 
-            // Encrypt the JSON
-            string encryptedStudent =
-                await encryptionService.EncryptAsync(studentJson);
+            // Make sure the API successfully saved the check-in
+            if (!checkInSaved)
+            {
+                await DisplayAlertAsync(
+                    "Check-In Failed",
+                    "The check-in could not be saved to the server.",
+                    "OK");
 
-            // Save ONLY the encrypted version to local storage
-            await SaveCheckIntoFile(encryptedStudent);
+                return;
+            }
 
             await DisplayAlertAsync(
                 "Check In Successful",
