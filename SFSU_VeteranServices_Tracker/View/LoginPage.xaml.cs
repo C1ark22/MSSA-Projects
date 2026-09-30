@@ -12,11 +12,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Maui.Storage;
+using SFSU_VeteranServices_Tracker.Model;
+using SFSU_VeteranServices_Tracker.Services;
 
 namespace SFSU_VeteranServices_Tracker.View;
 
 public partial class LoginPage : ContentPage
 {
+    private readonly ApiService apiService = new ApiService();
     public LoginPage()
     {
         InitializeComponent();
@@ -27,35 +31,48 @@ public partial class LoginPage : ContentPage
         string username = usernameEntry.Text;
         string password = passwordEntry.Text;
 
-        if (string.IsNullOrWhiteSpace(username))
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
             await DisplayAlertAsync(
                 "Missing Information",
-                "Please enter your username.",
+                "Please enter your username and password.",
                 "OK");
 
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(password))
+        // Attempt to log in using the API service.
+        try
         {
-            await DisplayAlertAsync(
-                "Missing Information",
-                "Please enter your password.",
-                "OK");
+            LoginResponse? loginResponse = await apiService.LoginAsync(username, password);
 
-            return;
-        }
+            // API returned 401 Unauthorized.
+            if (loginResponse == null)
+            {
+                await DisplayAlertAsync(
+                    "Login Failed",
+                    "Invalid username or password.",
+                    "OK");
 
-        if (username == "staff" && password == "1234")
-        {
+                return;
+            }
+
+            // Store the JWT securely on the device.
+            await SecureStorage.Default.SetAsync("auth_token", loginResponse.Token);
+
+            // Save the role so we know whether
+            // this user is Manager or Staff.
+            await SecureStorage.Default.SetAsync("staff_role", loginResponse.Role);
+
+            await SecureStorage.Default.SetAsync("staff_username", loginResponse.Username);
+
             await Shell.Current.GoToAsync(nameof(StaffPage));
         }
-        else
+        catch (Exception ex)
         {
             await DisplayAlertAsync(
-                "Login Failed",
-                "Incorrect username or password.",
+                "Connection Error",
+                $"Unable to log in.\n\n{ex.Message}",
                 "OK");
         }
     }

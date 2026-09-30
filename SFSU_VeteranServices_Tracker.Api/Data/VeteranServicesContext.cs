@@ -13,5 +13,6 @@ namespace SFSU_VeteranServices_Tracker.Api.Data
         }
 
         public DbSet<StudentCheckIn> StudentCheckIns { get; set; }
+        public DbSet<StaffUser> StaffUsers { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SFSU_VeteranServices_Tracker.Api.Data;
 using SFSU_VeteranServices_Tracker.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SFSU_VeteranServices_Tracker.Api.Controllers
 {
@@ -19,12 +20,14 @@ namespace SFSU_VeteranServices_Tracker.Api.Controllers
 
 
         // GET: api/checkins
+        [Authorize(Roles = "Manager,Staff")]
         [HttpGet]
         public async Task<ActionResult<List<StudentCheckIn>>> GetCheckIns()
         {
             List<StudentCheckIn> checkIns =
                 await _context.StudentCheckIns
-                    .OrderByDescending(student => student.CheckInTime)
+                    .OrderByDescending(student =>
+                        student.CheckInTime)
                     .ToListAsync();
 
             return Ok(checkIns);
